@@ -40,6 +40,7 @@ class TokenData(BaseModel):
     username:Optional[str]=None
 
 class NewUser(BaseModel):
-    email:List[EmailStr]
+    email:List[str]
+
 
 

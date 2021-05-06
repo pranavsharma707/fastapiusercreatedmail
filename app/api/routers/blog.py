@@ -63,6 +63,11 @@ def update(id,request:schema.Blog,db:Session=Depends(databases.get_db),get_curre
 
 @router.post('/user_create',status_code=status.HTTP_202_ACCEPTED)
 async def create_user(request:schema.NewUser,db:Session=Depends(databases.get_db)):
+    arr=request.email[0]
+    s=arr.split('@')
+    s=len(s)-1
+    if s==0:
+         raise HTTPException(status_code=status.HTTP_302_FOUND,detail="email is invalid")
     user=db.query(model.NewUser).filter(model.NewUser.email==request.email[0])
     if user.first():
         raise HTTPException(status_code=status.HTTP_302_FOUND,detail="email is already avaibale please try with unique email")
