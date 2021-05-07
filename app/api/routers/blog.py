@@ -90,3 +90,9 @@ def get_user(id,db:Session=Depends(databases.get_db)):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f'Blog with id {id} is not available')
     return user
 
+
+@router.post("/upload/")
+def create_upload_file(file:UploadFile=File(...),db:Session=Depends(databases.get_db)):
+    return {'msg': file.filename}
+
+
