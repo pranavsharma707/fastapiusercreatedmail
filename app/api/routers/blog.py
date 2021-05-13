@@ -95,4 +95,16 @@ def get_user(id,db:Session=Depends(databases.get_db)):
 def create_upload_file(file:UploadFile=File(...),db:Session=Depends(databases.get_db)):
     return {'msg': file.filename}
 
+@router.post("/createuser")
+def createuser(request:schema.CreateUser,db:Session=Depends(databases.get_db)):
+     new_user=model.CreateUser(first_name=request.first_name,last_name=request.last_name,address=request.address)
+     if request.first_name=='string' or request.first_name==" ":
+         return {'msg':'please enter data in first_name'}
+     if request.last_name=='string' or request.last_name==" ":
+         return {'msg':'please enter data in last_name'}
+     if request.address=='string' or request.address==" ":
+         return {'msg':'please enter data in address'}
+     db.refresh(new_user)
+     return new_user
+
 
